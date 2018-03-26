@@ -26,10 +26,10 @@ function xiaoye_load_textdomain() {
 add_action('plugins_loaded', 'xiaoye_load_textdomain');
 
 /**
- * Create project post type.
+ * Create custom post types: project and skill
  */
 function xiaoye_create_project_post_type() {
-	$args = [
+	register_post_type('project', [
 		'labels' => [
 			'name' => __('Projects', 'xiaoye'),
 			'singular_name' => __('Project', 'xiaoye'),
@@ -48,8 +48,51 @@ function xiaoye_create_project_post_type() {
 		'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'revisions'],
 		'has_archive' => true,
 		'rewrite' => ['slug' => 'project'],
-	];
-	register_post_type('project', $args);
+	]);
+
+	register_post_type('skill', [
+		'labels' => [
+			'name' => __('Skills', 'xiaoye'),
+			'singular_name' => __('Skill', 'xiaoye'),
+			'all_items' => __('All Skills', 'xiaoye'),
+			'add_new' => __('Add New', 'xiaoye'),
+			'add_new_item' => __('Add New Skill', 'xiaoye'),
+			'edit_item' => __('Edit Skill', 'xiaoye'),
+			'new_item' => __('New Skill', 'xiaoye'),
+			'view_item' => __('View Skill', 'xiaoye'),
+			'search_items' => __('Search Skills', 'xiaoye'),
+			'not_found' => __('No skills found', 'xiaoye'),
+			'not_found_in_trash' => __('No skills found in trash', 'xiaoye'),
+		],
+		'description' => __('Professional and life skills', 'xiaoye'),
+		'public' => true,
+		'supports' => ['title', 'editor', 'thumbnail'],
+		'has_archive' => true,
+		'rewrite' => ['slug' => 'project'],
+	]);
 }
 
 add_action('init', 'xiaoye_create_project_post_type');
+
+/**
+ * Show different number of posts for custom post types
+ *
+ * @param WP_Query $query
+ */
+function xiaoye_set_posts_per_page( $query ) {
+	if ( !is_admin() && $query->is_main_query() ) {
+		// Load all skills in one page
+		if (is_post_type_archive( 'skill' )) {
+			$query->set( 'posts_per_page', '999' );
+			return;
+		}
+
+		// Load more projects in one page
+		if (is_post_type_archive( 'project' )) {
+			$query->set( 'posts_per_page', '24' );
+			return;
+		}
+	}
+}
+
+add_action( 'pre_get_posts', 'xiaoye_set_posts_per_page' );
