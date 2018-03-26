@@ -1,0 +1,5 @@
+# GNU Gettext machine read messages
+*.mo
+
+# Linux
+.directory
