@@ -28,7 +28,7 @@ add_action('plugins_loaded', 'xiaoye_load_textdomain');
 /**
  * Create custom post types: project and skill
  */
-function xiaoye_create_project_post_type() {
+function xiaoye_post_types() {
 	register_post_type('project', [
 		'labels' => [
 			'name' => __('Projects', 'xiaoye'),
@@ -68,11 +68,11 @@ function xiaoye_create_project_post_type() {
 		'public' => true,
 		'supports' => ['title', 'editor', 'thumbnail'],
 		'has_archive' => true,
-		'rewrite' => ['slug' => 'project'],
+		'rewrite' => ['slug' => 'skill'],
 	]);
 }
 
-add_action('init', 'xiaoye_create_project_post_type');
+add_action('init', 'xiaoye_post_types');
 
 /**
  * Show different number of posts for custom post types
