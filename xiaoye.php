@@ -66,6 +66,7 @@ function xiaoye_post_types() {
 		],
 		'description' => __('Professional and life skills', 'xiaoye'),
 		'public' => true,
+		'exclude_from_search' => true,
 		'supports' => ['title', 'editor', 'thumbnail'],
 		'has_archive' => true,
 		'rewrite' => ['slug' => 'skill'],
@@ -95,4 +96,4 @@ function xiaoye_set_posts_per_page( $query ) {
 	}
 }
 
-add_action( 'pre_get_posts', 'xiaoye_set_posts_per_page', 1 );
+//add_action( 'pre_get_posts', 'xiaoye_set_posts_per_page', 1 );
