@@ -96,4 +96,4 @@ function xiaoye_set_posts_per_page( $query ) {
 	}
 }
 
-//add_action( 'pre_get_posts', 'xiaoye_set_posts_per_page', 1 );
+add_action( 'pre_get_posts', 'xiaoye_set_posts_per_page', 1 );
